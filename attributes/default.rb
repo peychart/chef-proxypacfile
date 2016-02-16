@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-default['chef-proxypacfile']['docRoot'] = '/var/www/html/'
+default['chef-proxypacfile']['docRoot'] = '/var/lib/squidguard/db/html'
 default['chef-proxypacfile']['serverName'] = 'proxy.' + node['domain']
 default['chef-proxypacfile']['fileName'] = 'proxy.pac'
 default['chef-proxypacfile']['fileDefinition'] = [
