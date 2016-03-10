@@ -19,6 +19,7 @@
 
 default['chef-proxypacfile']['docRoot'] = '/var/lib/squidguard/db/html'
 default['chef-proxypacfile']['serverName'] = 'proxy.' + node['domain']
+default['chef-proxypacfile']['allow_override'] = 'Options=Indexes'
 default['chef-proxypacfile']['fileName'] = 'proxy.pac'
 default['chef-proxypacfile']['fileDefinition'] = [
   'function FindProxyForURL(url, host)',

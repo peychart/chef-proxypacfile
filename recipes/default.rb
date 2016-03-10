@@ -22,6 +22,8 @@ web_app node['chef-proxypacfile']['serverName'] do
   server_name node['chef-proxypacfile']['serverName']
   server_aliases node['chef-proxypacfile']['serverAlias'] if node['chef-proxypacfile']['serverAlias']
   docroot node['chef-proxypacfile']['docRoot']
+# to rewrite for other options:
+  allow_override node['chef-proxypacfile']['allow_override'] if node['chef-proxypacfile']['allow_override']
   enable true
 end
 
