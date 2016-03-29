@@ -32,8 +32,8 @@ default['chef-proxypacfile']['fileDefinition'] = [
   '        || isInNet(myIpAddress(), "172.16.0.0", "255.240.0.0")',
   '        || isInNet(myIpAddress(), "192.168.0.0", "255.255.0.0")',
   '    )',
-  '        return "PROXY squid.toriki.srv.gov.pf:3128";',
-  '    else',
   '        return "DIRECT";',
+  '',
+  '    return "PROXY squid:3128";',
   '}'
 ]
