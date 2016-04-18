@@ -34,6 +34,6 @@ default['chef-proxypacfile']['fileDefinition'] = [
   '    )',
   '        return "DIRECT";',
   '',
-  '    return "PROXY squid:3128";',
+  '    return "PROXY proxy:3128";',
   '}'
 ]
