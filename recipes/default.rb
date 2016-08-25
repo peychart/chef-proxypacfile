@@ -31,13 +31,13 @@ end
 # set Apache Document Root:
 bash "change-doc-root" do
   code "dir=$(sed -e 's/#.*$//' /etc/apache2/sites-enabled/000-default.conf| grep DocumentRoot| cut -d' ' -f2); [ -d $dir -a ! -L $dir ] && mv $dir $dir.sv; ln -fs #{node['chef-proxypacfile']['docRoot']} $dir"
-end
+end if node['chef-proxypacfile']['docRoot'] != ''
 
 ## Apache conf:
 bash "change-doc-root" do
   code "cd /etc/apache2/sites-enabled/ && grep -qs ServerAlias 000-default.conf || (sed -e '/DocumentRoot/i\\        ServerAlias #{node['chef-proxypacfile']['serverAlias']}' 000-default.conf >/tmp/000-default.conf && cat /tmp/000-default.conf >000-default.conf)"
   notifies :restart, 'service[apache2]', :immediately
-end
+end if node['chef-proxypacfile']['serverAlias'] != ''
 
 # create the pac file:
 file "#{node['chef-proxypacfile']['docRoot']}/#{node['chef-proxypacfile']['fileName']}" do
