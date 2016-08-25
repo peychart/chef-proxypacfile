@@ -17,22 +17,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-web_app node['chef-proxypacfile']['serverName'] do
-  cookbook 'apache2'
-  server_name node['chef-proxypacfile']['serverName']
-  server_aliases node['chef-proxypacfile']['serverAlias'] if node['chef-proxypacfile']['serverAlias']
-  docroot node['chef-proxypacfile']['docRoot']
-# to rewrite for other options:
-  allow_override node['chef-proxypacfile']['allow_override'] if node['chef-proxypacfile']['allow_override']
-  enable true
+# LXC install:
+%w( apache2 libapache2-mod-php5 ).each do |package|
+  package package do
+    action :install
+  end
 end
 
-definition=''
-Array( node['chef-proxypacfile']['fileDefinition'] ).each do |i|
-  definition = definition + i + "\n"
+service 'apache2' do
+  action [:enable, :start]
 end
 
+# set Apache Document Root:
+bash "change-doc-root" do
+  code "dir=$(sed -e 's/#.*$//' /etc/apache2/sites-enabled/000-default.conf| grep DocumentRoot| cut -d' ' -f2); [ -d $dir -a ! -L $dir ] && mv $dir $dir.sv; ln -fs #{node['chef-proxypacfile']['docRoot']} $dir"
+end
+
+## Apache conf:
+bash "change-doc-root" do
+  code "cd /etc/apache2/sites-enabled/ && grep -qs ServerAlias 000-default.conf || (sed -e '/DocumentRoot/i\\        ServerAlias #{node['chef-proxypacfile']['serverAlias']}' 000-default.conf >/tmp/000-default.conf && cat /tmp/000-default.conf >000-default.conf)"
+  notifies :restart, 'service[apache2]', :immediately
+end
+
+# create the pac file:
 file "#{node['chef-proxypacfile']['docRoot']}/#{node['chef-proxypacfile']['fileName']}" do
-  content definition
+#  content definition
   mode '0644'
 end
+
