@@ -23,10 +23,6 @@ default['chef-proxypacfile']['fileName'] = 'proxy.pac'
 default['chef-proxypacfile']['fileDefinition'] = [
   'function FindProxyForURL(url, host)',
   '{',
-  '    if ( shExpMatch(url, "*.gov.pf") || shExpMatch(url, "*.gov.pf/*") ) {',
-  '        return "DIRECT";',
-  '    }',
-  '',
   '    return "PROXY proxy:3128";',
   '}'
 ]
