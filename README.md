@@ -28,8 +28,8 @@ Example of role definition
 Example of pac file
 -------------------
 
-  function FindProxyForURL(url, host)
-  {
+    function FindProxyForURL(url, host)
+    {
     var debug = "";
 
     if(debug)
@@ -44,7 +44,7 @@ Example of pac file
         return "DIRECT";
 
     return "PROXY proxy:3128";
-  }
+    }
 
 License & Authors
 -----------------
