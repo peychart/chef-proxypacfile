@@ -25,6 +25,26 @@ Example of role definition
   ]
 }
 ```
+Example of pac file
+-------------------
+
+  function FindProxyForURL(url, host)
+  {
+    var debug = "";
+
+    if(debug)
+    {
+        alert("proxy.pac IP=" + myIpAddress() + "  IPHOST=" + dnsResolve(host) + "  URL=" + url);
+    }
+
+    if ( isInNet(host, "10.0.0.0", "255.0.0.0")
+      || isInNet(host, "172.16.0.0", "255.240.0.0")
+      || isInNet(host, "192.168.0.0", "255.255.0.0")
+    )
+        return "DIRECT";
+
+    return "PROXY proxy:3128";
+  }
 
 License & Authors
 -----------------
